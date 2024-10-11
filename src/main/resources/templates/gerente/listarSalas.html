@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar.html :: header( title = 'Lista de Salas')}"></head>
+<body>
+<div class="container">
+    <h2>Lista de Salas</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Capacidad</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sala : ${salas}">
+            <td th:text="${sala.id}"></td>
+            <td th:text="${sala.name}"></td>
+            <td th:text="${sala.capacity}"></td>
+            <td>
+                <a class="btn btn-warning" th:href="@{'/gerente/editarSala?id=' + ${sala.id}}">Editar</a>
+            </td>
+            <td>
+                <form th:action="@{'/gerente/eliminarSala'}" method="post">
+                    <input type="hidden" name="id" th:value="${sala.id}"/>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" th:href="@{'/gerente/crearSala'}">Agregar Sala</a>
+</div>
+<script th:replace="~{fragments/navbar.html :: footer-bootstrap}"></script>
+</body>
+</html>

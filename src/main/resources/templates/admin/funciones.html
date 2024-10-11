@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar.html :: header(title = 'Funciones')}"></head>
+<body>
+<div class="container">
+    <nav th:replace="~{fragments/navbar.html :: navbar(active = 'Funciones')}"></nav>
+    <h2>Lista de Funciones</h2>
+    <a class="btn btn-primary mt-4 mb-4" th:href="@{'/admin/crear'}">Agregar Proyección</a>
+    <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Obra</th>
+            <th>Sala</th>
+            <th>Fecha y Hora</th>
+            <th>Asientos Disponibles</th>
+            <th>Editar</th>
+            <th>Borrar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="funcion, info : ${funciones}">
+            <td th:text="${info.index + 1}"></td>
+            <td th:text="${funcion.obra.title}"></td>
+            <td th:text="${funcion.room.name}"></td>
+            <td th:text="${#dates.format(funcion.funcionDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${funcion.availableSeats}"></td>
+            <td>
+                <a class="btn btn-primary" th:href="@{'/admin/editar' + '?id=' + ${funcion.id}}">Editar</a>
+            </td>
+            <td>
+                <a class="btn btn-danger" th:href="@{'/admin/eliminar' + '?id=' + ${funcion.id}}"
+                   onclick="return confirm('¿Está seguro de que desea eliminar esta función?')">Borrar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script th:replace="~{fragments/navbar.html :: footer-bootstrap}"></script>
+</body>
+</html>

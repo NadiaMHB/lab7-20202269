@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar.html :: header(title='Editar Función')}"></head>
+<body>
+<div class="container">
+    <nav th:replace="~{fragments/navbar.html :: navbar(active='Funcion')}"></nav>
+    <div class="row mb-4">
+        <div class="col-md-6 offset-md-3">
+            <h2>Editar Función</h2>
+            <hr/>
+            <form th:action="@{/admin/guardar}" method="post" th:object="${funcion}">
+                <input th:field="*{id}" type="hidden"/>
+                <div class="mb-3">
+                    <label for="obra" class="form-label">Obra</label>
+                    <select class="form-select" name="obraId" id="obra" th:field="*{obraId}" required>
+                        <option th:each="obra : ${listaObras}"
+                                th:value="${obra.id}"
+                                th:selected="${funcion.obraId == obra.id}"
+                                th:text="${obra.title}"></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="sala" class="form-label">Sala</label>
+                    <select class="form-select" name="roomId" id="sala" th:field="*{roomId}" required>
+                        <option th:each="sala : ${listaSalas}"
+                                th:value="${sala.id}"
+                                th:selected="${funcion.roomId == sala.id}"
+                                th:text="${sala.name}"></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="funcionDate" class="form-label">Fecha y Hora de la Función</label>
+                    <input type="datetime-local" class="form-control" th:field="*{funcionDate}" id="funcionDate" required/>
+                </div>
+                <div class="mb-3">
+                    <label for="availableSeats" class="form-label">Asientos Disponibles</label>
+                    <input type="number" class="form-control" th:field="*{availableSeats}" id="availableSeats" required/>
+                </div>
+                <a th:href="@{/admin/listar}" class="btn btn-danger">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script th:replace="~{fragments/navbar.html :: footer-bootstrap}"></script>
+</body>
+</html>

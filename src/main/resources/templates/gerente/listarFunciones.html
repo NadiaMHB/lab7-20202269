@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/navbar.html :: header(title = 'Funciones')}"></head>
+<body>
+<div class="container">
+  <nav th:replace="~{fragments/navbar.html :: navbar(active = 'Funciones')}"></nav>
+  <h2>Lista de Funciones</h2>
+  <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Obra</th>
+      <th>Sala</th>
+      <th>Fecha y Hora</th>
+      <th>Asientos Disponibles</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="funcion, info : ${funciones}">
+      <td th:text="${info.index + 1}"></td>
+      <td th:text="${funcion.obra.title}"></td>
+      <td th:text="${funcion.room.name}"></td>
+      <td th:text="${#dates.format(funcion.funcionDate, 'yyyy-MM-dd HH:mm')}"></td>
+      <td th:text="${funcion.availableSeats}"></td>
+
+    </tr>
+    </tbody>
+  </table>
+</div>
+<script th:replace="~{fragments/navbar.html :: footer-bootstrap}"></script>
+</body>
+</html>
